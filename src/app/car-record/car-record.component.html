@@ -1,0 +1,30 @@
+<p>car-record works!</p>
+<div *ngIf="loading">Loading...</div>
+<table *ngIf="!loading" border="1">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>first Name</th>
+      <th>Last Name</th>
+      <th>Email</th>
+      <th>Make</th>
+      <th>Model</th>
+      <th>Vin</th>
+      <th>Year</th>
+      <th>Age</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let car of cars">
+      <td>{{ car.id }}</td>
+      <td>{{ car.firstName }}</td>
+      <td>{{ car.lastName }}</td>
+      <td>{{ car.email }}</td>
+      <td>{{ car.carMake }}</td>
+      <td>{{ car.carModel }}</td>
+      <td>{{ car.vin }}</td>
+      <td>{{ car.manufacturedDate }}</td>
+      <td>{{ car.ageOfVehicle }}</td>
+    </tr>
+  </tbody>
+</table>

@@ -1,4 +1,4 @@
-<p>car-record works!</p>
+<p>car-records</p>
 <div *ngIf="loading">Loading...</div>
 <table *ngIf="!loading" border="1">
   <thead>
@@ -12,19 +12,100 @@
       <th>Vin</th>
       <th>Year</th>
       <th>Age</th>
+      <th>Options</th>
+      
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let car of cars">
-      <td>{{ car.id }}</td>
-      <td>{{ car.firstName }}</td>
-      <td>{{ car.lastName }}</td>
-      <td>{{ car.email }}</td>
-      <td>{{ car.carMake }}</td>
-      <td>{{ car.carModel }}</td>
-      <td>{{ car.vin }}</td>
-      <td>{{ car.manufacturedDate }}</td>
-      <td>{{ car.ageOfVehicle }}</td>
+    <ng-container *ngFor="let car of cars">
+    <tr >
+      <td>
+        <div *ngIf="car.isEdit">
+          <input [formControl]="InputID" type="text" class="form-control" [placeholder]="car.id" >
+        </div>
+        <div *ngIf="!car.isEdit">
+          {{car.id}}
+        </div>
+      </td>
+      <td>
+        <div *ngIf="car.isEdit">
+          <input [formControl]="InputFirstNme" type="text" class="form-control" [placeholder]="car.firstName" >
+        </div>
+        <div *ngIf="!car.isEdit">
+          {{car.firstName}}
+        </div>
+      </td>
+      <td><div *ngIf="car.isEdit">
+        <input [formControl]="InputLastName" type="text" class="form-control"  [placeholder]="car.lastName" >
+      </div>
+      <div *ngIf="!car.isEdit">
+        {{car.lastName}}
+      </div></td>
+      <td><div *ngIf="car.isEdit">
+        <input [formControl]="InputEmail" type="text" class="form-control"  [placeholder]="car.email">
+      </div>
+      <div *ngIf="!car.isEdit">
+        {{car.email}}
+      </div></td>
+      <td><div *ngIf="car.isEdit">
+        <input [formControl]="InputCarMake" type="text" class="form-control" [placeholder]="car.carMake" >
+      </div>
+      <div *ngIf="!car.isEdit">
+        {{car.carMake}}
+      </div></td>
+      <td><div *ngIf="car.isEdit">
+        <input [formControl]="InputModel" type="text" class="form-control"  [placeholder]="car.carModel" >
+      </div>
+      <div *ngIf="!car.isEdit">
+        {{car.carModel}}
+      </div></td>
+      <td><div *ngIf="car.isEdit">
+        <input [formControl]="InputVin" type="text" class="form-control"  [placeholder]="car.vin">
+      </div>
+      <div *ngIf="!car.isEdit">
+        {{car.vin}}
+      </div></td>
+      <td><div *ngIf="car.isEdit">
+        <input [formControl]="InputYear" type="text" class="form-control" [placeholder]="car.manufacturedDate" >
+      </div>
+      <div *ngIf="!car.isEdit">
+        {{car.manufacturedDate}}
+      </div></td>
+      <td><div *ngIf="car.isEdit">
+        <input [formControl]="InputAge" type="text" class="form-control"  [placeholder]="car.ageOfVehicle" >
+      </div>
+      <div *ngIf="!car.isEdit">
+        {{car.ageOfVehicle}}
+      </div></td>
+      
+      <td>
+        <div *ngIf="car.isEdit" class="button-container">
+        <button type="button" (click)="updateCars(car)">&#9989;</button>
+        <button (click)="onClickUpdateBtn(car)">&#10060;</button>
+        
+        
+      </div>
+          <div *ngIf="!car.isEdit" class="button-container">
+            <button mat-raised-button color="primary" (click)="onClickUpdateBtn(car)">Update</button>
+            <button mat-raised-button color="warn" (click)="deleteCars(car.id)">Delete</button>
+            <button mat-raised-button color="accent" (click)="onClickServiceRecords(car)">Service Records</button>
+          </div>
+          
+              
+      </td>
+      
     </tr>
+    <tr *ngIf="car.showServiceRecords">
+      <td colspan="10">
+        <div *ngFor="let record of serviceRecords">
+          <p>ID: {{record.id}} </p>
+          <p> VIN: {{record.vin}} </p> 
+          <p>Date of Service : {{record.DateOfService}} </p> 
+          <p> Cost : {{record.cost}}$</p>
+        </div>
+      </td>
+    </tr>
+  </ng-container>
   </tbody>
 </table>
+<mat-paginator [length]="totalVehicles" [pageSize]="take" [pageSizeOptions]="[10, 20, 50, 100]" (page)="onPageChange($event)" ></mat-paginator>

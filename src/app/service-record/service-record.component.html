@@ -1,0 +1,51 @@
+<p *ngIf="!loading">search by car VIN for service records</p>
+<table *ngIf="loading" border="1" >
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>VIN</th>
+            <th>Date of Service</th>
+            <th>Cost</th>
+            <th>Options</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let record of records">
+            <td>
+              <ng-container *ngIf="record.isEdit; else displayId">
+                <input [placeholder]="record.id" [(ngModel)]="record.id" />
+              </ng-container>
+              <ng-template #displayId>{{ record.id }}</ng-template>
+            </td>
+            <td>
+              <ng-container *ngIf="record.isEdit; else displayVin">
+                <input [placeholder]="record.vin" [(ngModel)]="record.vin" />
+              </ng-container>
+              <ng-template #displayVin>{{ record.vin }}</ng-template>
+            </td>
+            <td>
+              <ng-container *ngIf="record.isEdit; else displayDate">
+                <input [placeholder]="record.DateOfService" [(ngModel)]="record.DateOfService" />
+              </ng-container>
+              <ng-template #displayDate>{{ record.DateOfService }}</ng-template>
+            </td>
+            <td>
+              <ng-container *ngIf="record.isEdit; else displayCost">
+                <input [placeholder]="record.cost" [(ngModel)]="record.cost" />
+              </ng-container>
+              <ng-template #displayCost>{{ record.cost }}</ng-template>
+            </td>
+            <td>
+              <ng-container *ngIf="record.isEdit; else actionButtons">
+                <button mat-raised-button color="primary" (click)="updateRecords(record)" >OK</button>
+                <button mat-raised-button color="warn" (click)="onClickUpdateBtn(record)" >Close</button>
+              </ng-container>
+              <ng-template #actionButtons>
+                <button mat-raised-button color="primary" (click)="onClickUpdateBtn(record)">Update</button>
+                <button mat-raised-button color="warn" (click)="deleteCarRecords(record.id)">Delete</button>
+              </ng-template>
+            </td>
+          </tr>
+          
+    </tbody>
+</table>

@@ -5,6 +5,11 @@ import { provideApollo } from 'apollo-angular';
 import { routes } from './app.routes';
 import { provideHttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+
+
+
+const config: SocketIoConfig = { url: 'http://localhost:3003', options: {} };
 
 export function createApollo(): ApolloClientOptions<any> {
   return {
@@ -15,10 +20,12 @@ export function createApollo(): ApolloClientOptions<any> {
 
 export const appConfig: ApplicationConfig = {
   providers: [
+
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideApollo(createApollo), 
     provideHttpClient(),
-    importProvidersFrom(FormsModule)
+    importProvidersFrom(FormsModule, SocketIoModule.forRoot(config)),
+    
   ],
 };

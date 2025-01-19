@@ -8,5 +8,7 @@ export interface CarRecord {
     vin : string
     manufacturedDate : Date
     ageOfVehicle : number
+    isEdit : boolean
+    showServiceRecords: boolean
 
 }
